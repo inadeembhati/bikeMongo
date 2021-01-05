@@ -9,9 +9,9 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -66,11 +66,22 @@ public class BikeController {
 		bikeRepository.deleteById(id);
 		return "Deleted";
 	}
-	@PatchMapping("/{id}")
-	public String updateBike(@PathVariable String id,@RequestBody Bike bike) {
-		return "failed";
+	@PutMapping("/edit/{id}")
+	public Bike updateBike(@PathVariable String id, @RequestBody Bike bike) {
+
+		Bike _bike = bikeRepository.findById(id).get();
 		
+		_bike.setBuyerName(bike.getBuyerName());
+		_bike.setEmail(bike.getEmail());
+		_bike.setModel(bike.getModel());
+		_bike.setPhone(bike.getPhone());
+		_bike.setPrice(bike.getPrice());
+		_bike.setPurchaseDate(bike.getPurchaseDate());
+		_bike.setSerialNumber(bike.getSerialNumber());
+
+		return bikeRepository.save(_bike);
 	}
+	
 	@DeleteMapping("/deleteAll")
 	public String deleteAll() {
 		bikeRepository.deleteAll();
