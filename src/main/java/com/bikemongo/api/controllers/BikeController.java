@@ -1,4 +1,4 @@
-package com.bikemongo.api.resource;
+package com.bikemongo.api.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +41,9 @@ public class BikeController {
 	@GetMapping("/email/{email}")
 	public  Iterable<Bike>  getbyEmail(@PathVariable String email) {
 		email = email.replace("\"", "");
+
+		// List<Bike> bikes = bikeRepository.findAllByEmail(email);
+
 		List<Bike> bikes = new ArrayList<Bike>();
 
 		Iterable<Bike> allBikes = getBikes();
